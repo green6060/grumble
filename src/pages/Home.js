@@ -18,38 +18,24 @@ class Home extends Component {
   state = {
     searchValue: '',
     selectedFoodTypes: [],
-    pricePoints: [],
-    distance: ''
+    selectedPrice: '$$$',
+    selectedDistance: '5 Miles'
   }
 
   render () {
     const { classes } = this.props
-    const { searchValue, selectedFoodTypes } = this.state
+    const { searchValue, selectedFoodTypes, selectedDistance, selectedPrice } = this.state
 
     console.log(selectedFoodTypes)
 
-    const foodTypeArr = ['Food', 'Fast Food', 'Chinese', 'Indian', 'Italian', 'Healthy', 'Sushi', 'Japanese', 'Korean']
+    const foodTypeArr = ['Mexican', 'French', 'Chinese', 'Indian', 'Italian', 'Thai', 'Seafood', 'Japanese', 'Korean', 'German', 'Fast Food', 'Cocktails', 'Steak', 'American', 'Vegan']
+    const priceArr = ['$', '$$', '$$$']
+    const distanceArr = ['Walking', '5 Miles', '20 miles']
 
     return (
       <Card className={classes.searchForm}>
         <form>
           <CardContent>
-            <Typography align='center' variant='h3'>
-            Gulper (Tinder For Food)
-            </Typography>
-            <TextField
-              fullWidth
-              value={searchValue}
-              onChange={this.handleInputChange}
-              placeholder='Search Food Type'
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <Search />
-                  </InputAdornment>
-                )
-              }} />
-
             <Grid container className={classes.fullWidth}>
               <Grid item className={classes.fullWidth}>
                 <Typography className={classes.fullWidth} variant='caption'>Select food types to include in search.</Typography>
@@ -70,10 +56,60 @@ class Home extends Component {
                 )
               })}
             </Grid>
+
+            <Grid container className={classes.fullWidth}>
+              <Grid item className={classes.fullWidth}>
+                <Typography className={classes.fullWidth} variant='caption'>Select price point and max distance.</Typography>
+              </Grid>
+
+              {priceArr.map((price, key) => {
+                return (
+                  <Grid
+                    item
+                    sm={2} lg={4}
+                    onClick={() => this.select('selectedPrice', price)}
+                    key={`${price}${key}`}
+                    justify='center'
+                    alignContent='center'
+                    className={classNames(classes.foodTypeButton, selectedPrice === price && 'selected')}>
+                    <Typography align='center' className={classes.FullWidth}>{price}</Typography>
+                  </Grid>
+                )
+              })}
+              {distanceArr.map((distance, key) => {
+                return (
+                  <Grid
+                    item
+                    sm={2} lg={4}
+                    onClick={() => this.select('selectedDistance', distance)}
+                    key={`${distance}${key}`}
+                    justify='center'
+                    alignContent='center'
+                    className={classNames(classes.foodTypeButton, selectedDistance === distance && 'selected')}>
+                    <Typography align='center' className={classes.FullWidth}>{distance}</Typography>
+                  </Grid>
+                )
+              })}
+            </Grid>
+
+            <TextField
+              fullWidth
+              style={{ marginTop: 24 }}
+              variant='outlined'
+              value={searchValue}
+              onChange={this.handleInputChange}
+              placeholder='Food Type or Restaurant Name (optional)'
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Search />
+                  </InputAdornment>
+                )
+              }} />
           </CardContent>
           <CardActions>
             <div className={classNames(classes.fullWidth, classes.displayFlex, classes.horizontalCenter)}>
-              <Button size='medium' color='primary' variant='contained'>Submit</Button>
+              <Button size='large' color='primary' variant='contained'>FIND ME FOOD</Button>
             </div>
           </CardActions>
         </form>
@@ -95,6 +131,10 @@ class Home extends Component {
     } else {
       this.setState({ selectedFoodTypes: [...this.state.selectedFoodTypes, type] })
     }
+  }
+
+  select = (name, value) => {
+    this.setState({ [name]: value })
   }
 }
 

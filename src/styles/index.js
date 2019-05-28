@@ -15,7 +15,7 @@ export default theme => ({
 
   foodTypeButton: {
     cursor: 'pointer',
-    border: `1px solid ${theme.palette.secondary.main}`,
+    border: `1px solid #fff`,
     padding: '8px 12px',
     backgroundColor: theme.palette.secondary.light1,
     transition: 'background-color 0.2s',
