@@ -5,6 +5,11 @@ import { Button } from '@material-ui/core'
 import colors from '../variables/colors'
 
 export default theme => ({
+  placesCard: {
+    maxWidth: 800,
+    minWidth: 500,
+    marginTop: 60
+  },
   searchForm: {
     margin: '0px calc(50% - 300px)',
     marginTop: 60,
